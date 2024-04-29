@@ -47,9 +47,29 @@ body {
   height: 85%;
   border-radius: 5px;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.results-pane {
+  width: 90%;
+  height: 85%;
+  display: flex;
+  flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: flex-end;
+  padding: 10px;
+}
+
+.operation-pane {
+  width: 10%;
+  height: 85%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
 }
 
