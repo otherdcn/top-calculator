@@ -82,7 +82,7 @@ body {
   align-items: center;
 }
 
-.action-key {
+.action-key, .operation-key {
   border-radius: 15px;
   background-color: #0090C1;
 }
