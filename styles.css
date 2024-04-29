@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1F2937;
+  color: #fff;
+  font-size: 35px;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  background-color: #183446;
+  width: 45%;
+  height: 70%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 20px;
+}
+
+.display {
+  width: 90%;
+  height: 25%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.contents {
+  background-color: #38AECC;
+  width: 80%;
+  height: 85%;
+  border-radius: 5px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.keypad {
+  width: 90%;
+  height: 70%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1px;
+}
+
+.key-row {
+  width: 95%;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1px;
+}
+
+.key {
+  background-color: #1F2937;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-key {
+  border-radius: 15px;
+  background-color: #0090C1;
+}
+
+.number-key {
+  border-radius: 15px;
+  background-color: #046E8F;
+}
+
+.key:hover {
+  background-color: #1F2937;
+}
