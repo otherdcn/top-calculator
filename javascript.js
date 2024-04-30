@@ -11,7 +11,7 @@ let operandOne = null;
 let operandTwo = null;
 let numberClicked = '';
 let operator = null;
-let continueOperation = true;
+let multipleOperands = true;
 let result;
 
 function add(a,b) {
@@ -36,9 +36,6 @@ function operate(operator,numOne,numTwo) {
   numOne = Number(numOne);
   numTwo = Number(numTwo);
 
-  console.log(`${numOne} is a ${typeof numOne}`);
-  console.log(`${numTwo} is a ${typeof numTwo}`);
-
   switch(operator) {
     case '+':
       result = add(numOne,numTwo);
@@ -54,6 +51,7 @@ function operate(operator,numOne,numTwo) {
       break;
   }
 
+  console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`)
   result = (result === 'can\'t') ? 'Can\'t divide by zero' : Number(result.toFixed(5));
   resultsDisplayPane.textContent = result;
   operandOne = result;
@@ -74,7 +72,7 @@ function listenForOperationClick() {
   allOperationKeys.forEach((operationKey) => {
     operationKey.addEventListener("click", () => {
       console.log("Operation key pressed: "+operationKey.textContent);
-      if (setOperands(continueOperation)) {
+      if (setOperands(multipleOperands)) {
         console.log("get result before accepting new operation...")
         result = operate(operator,operandOne,operandTwo);
         console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`);
@@ -83,7 +81,7 @@ function listenForOperationClick() {
       operator = operationKey.textContent;
       operationDisplayPane.textContent = operator;
       numberClicked = '';
-      continueOperation = true;
+      multipleOperands = true;
     });
   });
 }
@@ -105,23 +103,23 @@ function listenForActionClicks() {
       } else if (actionKey.textContent === "=") {
         console.log("Action key pressed: "+actionKey.textContent);
 
-        setOperands(false);
+        multipleOperands = false;
+        setOperands(multipleOperands);
 
         operationDisplayPane.textContent = actionKey.textContent;
 
         result = operate(operator,operandOne,operandTwo);
         console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`);
         numberClicked = '';
-        continueOperation = false;
       }
     });
   });
 }
 
-function setOperands(operate = false) {
+function setOperands(multipleOperands = false) {
   let fulfilOperation = false;
 
-  if (operandOne && operate) {
+  if (operandOne && multipleOperands) {
     operandTwo = resultsDisplayPane.textContent;
     console.log("Set Operand two: "+operandTwo);
     console.log("... and operate");
