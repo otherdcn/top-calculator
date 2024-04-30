@@ -10,7 +10,8 @@ const allNumberKeys = keypad.querySelectorAll(".number-key");
 let operandOne = null;
 let operandTwo = null;
 let numberClicked = '';
-let operator;
+let operator = null;
+let continueOperation = true;
 let result;
 
 function add(a,b) {
@@ -26,7 +27,7 @@ function multiply(a,b) {
 }
 
 function divide(a,b) {
-  if (b === 0) return 'nah';
+  if (b === 0) return 'can\'t';
   return a / b;
 }
 
@@ -53,7 +54,7 @@ function operate(operator,numOne,numTwo) {
       break;
   }
 
-  result = Number(result.toFixed(5));
+  result = (result === 'can\'t') ? 'Can\'t divide by zero' : Number(result.toFixed(5));
   resultsDisplayPane.textContent = result;
   operandOne = result;
   return result;
@@ -73,7 +74,7 @@ function listenForOperationClick() {
   allOperationKeys.forEach((operationKey) => {
     operationKey.addEventListener("click", () => {
       console.log("Operation key pressed: "+operationKey.textContent);
-      if (setOperands(true)) {
+      if (setOperands(continueOperation)) {
         console.log("get result before accepting new operation...")
         result = operate(operator,operandOne,operandTwo);
         console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`);
@@ -82,6 +83,7 @@ function listenForOperationClick() {
       operator = operationKey.textContent;
       operationDisplayPane.textContent = operator;
       numberClicked = '';
+      continueOperation = true;
     });
   });
 }
@@ -110,6 +112,7 @@ function listenForActionClicks() {
         result = operate(operator,operandOne,operandTwo);
         console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`);
         numberClicked = '';
+        continueOperation = false;
       }
     });
   });
