@@ -53,6 +53,7 @@ function operate(operator,numOne,numTwo) {
       break;
   }
 
+  result = Number(result.toFixed(5));
   resultsDisplayPane.textContent = result;
   operandOne = result;
   return result;
@@ -98,6 +99,7 @@ function listenForActionClicks() {
         numberClicked = '';
         operator = '';
         result = 0;
+        console.clear();
       } else if (actionKey.textContent === "=") {
         console.log("Action key pressed: "+actionKey.textContent);
 
