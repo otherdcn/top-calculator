@@ -42,6 +42,8 @@ function operate(operator,numOne,numTwo) {
   numOne = Number(numOne);
   numTwo = Number(numTwo);
 
+  console.log(`INPUT: ${numOne} ${operator} ${numTwo}`);
+
   switch(operator) {
     case '+':
       result = add(numOne,numTwo);
@@ -60,7 +62,7 @@ function operate(operator,numOne,numTwo) {
       break;
   }
 
-  console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`)
+  console.log(`OUTPUT: ${numOne} ${operator} ${numTwo} = ${result}`);
   result = (result === 'can\'t') ? 'Can\'t divide by zero' : Number(result.toFixed(5));
   resultsDisplayPane.textContent = result;
   operandOne = result;
@@ -72,11 +74,12 @@ function listenForNumberClicks() {
     numberKey.addEventListener("click", () => {
       console.log("Number key pressed: "+numberKey.textContent);
       numberClicked += numberKey.textContent;
+      console.log("Final number: "+numberClicked);
       numberClicked = Number(numberClicked);
       if (positiveOrNegative === "-" && numberClicked > 0) numberClicked = -numberClicked;
       if (positiveOrNegative === "+" && numberClicked < 0) numberClicked = -(numberClicked);
       prevValues.push(numberClicked);
-      console.log("Previous Values: "+prevValues);
+      // console.log("Previous Values: "+prevValues);
       resultsDisplayPane.textContent = numberClicked;
     });
   });
@@ -89,7 +92,6 @@ function listenForOperationClick() {
       if (setOperands(multipleOperands)) {
         console.log("get result before accepting new operation...")
         result = operate(operator,operandOne,operandTwo);
-        console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`);
       }
 
       operator = operationKey.textContent;
@@ -104,19 +106,24 @@ function listenForActionClicks() {
   allActionKeys.forEach((actionKey) => {
     actionKey.addEventListener("click", () => {
       if (actionKey.textContent === "AC") {
-        console.log("Action key pressed: "+actionKey.textContent);
-        console.log("All Cleared Clicked")
+        // console.log("Action key pressed: "+actionKey.textContent);
         resetValues();
       } else if (actionKey.textContent === "=") {
         console.log("Action key pressed: "+actionKey.textContent);
-        setOperands(false);
+
+        if (!operandTwo && !operandOne) {
+          console.log("Neither operand one or two are filled. Skipping...");
+          return;
+        }
+
+        // Keep 'multipleOperands = false' here to ensure continuous operation after user clicked '=' sign.
+        // The previous result will be used as operandOne if the user immediately clicks another operation key.
+        multipleOperands = false;
+        setOperands(multipleOperands);
 
         operationDisplayPane.textContent = actionKey.textContent;
 
         result = operate(operator,operandOne,operandTwo);
-        console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`);
-        // numberClicked = '';
-        // prevValues = [''];
         resetValues(true);
       } else if (actionKey.textContent === "x") {
         console.log("Backspace clicked");
@@ -127,16 +134,15 @@ function listenForActionClicks() {
         resultsDisplayPane.textContent = prevValues[prevValues.length-1];
         numberClicked = prevValues[prevValues.length-1];
       } else if (actionKey.textContent === "±") {
-        console.log("Click on pos/neg sign");
-        toggleNumbersign();
-        console.log("Changing sign, now "+positiveOrNegative);
-
+        // console.log("Click on pos/neg sign");
+        toggleNumberSign();
+        // console.log("Changing sign, now "+positiveOrNegative);
       }
     });
   });
 }
 
-function toggleNumbersign() {
+function toggleNumberSign() {
   let positive = "+";
   let negative = "-";
 
@@ -159,34 +165,32 @@ function toggleNumbersign() {
 }
 
 function setOperands(multipleOperands = false) {
-  let fulfilOperation = false;
+  let chainOperations = false;
 
   if (operandOne && multipleOperands) {
     operandTwo = resultsDisplayPane.textContent;
     console.log("Set Operand two: "+operandTwo);
-    console.log("... and operate");
-    fulfilOperation = true;
+    console.log("... and continuously operate");
+    chainOperations = true;
   } else if (operandOne) {
     operandTwo = resultsDisplayPane.textContent;
     console.log("Set Operand two: "+operandTwo);
-    console.log("... and don't operate");
+    console.log("... and wait for '=' sign");
   } else {
     operandOne = resultsDisplayPane.textContent;
     console.log("Set Operand one: "+operandOne);
   }
 
   resultsDisplayPane.textContent = '';
-  return fulfilOperation;
+  return chainOperations;
 }
 
 function resetValues(onlyNumbersClicked = false) {
   if (onlyNumbersClicked) {
-    console.log("Only clearing number clicked and prev values");
     numberClicked = '';
     prevValues = [''];
     positiveOrNegative = "+";
   } else {
-    console.log("Clearing everythin");
     operationDisplayPane.textContent = '';
     resultsDisplayPane.textContent = '';
     operandOne = null;
