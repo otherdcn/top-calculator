@@ -10,6 +10,7 @@ const allNumberKeys = keypad.querySelectorAll(".number-key");
 let operandOne = null;
 let operandTwo = null;
 let numberClicked = '';
+let pervValues = [''];
 let operator = null;
 let multipleOperands = true;
 let result;
@@ -63,6 +64,8 @@ function listenForNumberClicks() {
     numberKey.addEventListener("click", () => {
       console.log("Number key pressed: "+numberKey.textContent);
       numberClicked += numberKey.textContent;
+      pervValues.push(numberClicked);
+      console.log("Previous Values: "+pervValues);
       resultsDisplayPane.textContent = numberClicked;
     });
   });
@@ -81,6 +84,7 @@ function listenForOperationClick() {
       operator = operationKey.textContent;
       operationDisplayPane.textContent = operator;
       numberClicked = '';
+      pervValues = [''];
       multipleOperands = true;
     });
   });
@@ -111,6 +115,13 @@ function listenForActionClicks() {
         result = operate(operator,operandOne,operandTwo);
         console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`);
         numberClicked = '';
+      } else if (actionKey.textContent === "x") {
+        console.log("Backspace clicked");
+        console.log("Prev values Size: "+pervValues.length);
+        console.log("Prev values Popped: "+pervValues.pop());
+        console.log("Prev values Set: "+pervValues[pervValues.length-1]);
+        resultsDisplayPane.textContent = pervValues[pervValues.length-1];
+        numberClicked = pervValues[pervValues.length-1];
       }
     });
   });
