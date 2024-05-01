@@ -11,6 +11,7 @@ let operandOne = null;
 let operandTwo = null;
 let numberClicked = '';
 let prevValues = [''];
+let positiveOrNegative = '+';
 let operator = null;
 let multipleOperands = true;
 let result;
@@ -71,6 +72,9 @@ function listenForNumberClicks() {
     numberKey.addEventListener("click", () => {
       console.log("Number key pressed: "+numberKey.textContent);
       numberClicked += numberKey.textContent;
+      numberClicked = Number(numberClicked);
+      if (positiveOrNegative === "-" && numberClicked > 0) numberClicked = -numberClicked;
+      if (positiveOrNegative === "+" && numberClicked < 0) numberClicked = -(numberClicked);
       prevValues.push(numberClicked);
       console.log("Previous Values: "+prevValues);
       resultsDisplayPane.textContent = numberClicked;
@@ -122,9 +126,36 @@ function listenForActionClicks() {
         if (prevValues[0] === undefined) prevValues[0] = '';
         resultsDisplayPane.textContent = prevValues[prevValues.length-1];
         numberClicked = prevValues[prevValues.length-1];
+      } else if (actionKey.textContent === "±") {
+        console.log("Click on pos/neg sign");
+        toggleNumbersign();
+        console.log("Changing sign, now "+positiveOrNegative);
+
       }
     });
   });
+}
+
+function toggleNumbersign() {
+  let positive = "+";
+  let negative = "-";
+
+  if (positiveOrNegative === positive) {
+    positiveOrNegative = negative;
+
+    prevValues = prevValues.map((number) => {
+      return -number;
+    });
+  } else {
+    positiveOrNegative = positive;
+
+    prevValues = prevValues.map((number) => {
+      return -(number);
+    });
+  }
+
+  numberClicked = prevValues[prevValues.length-1];
+  resultsDisplayPane.textContent = numberClicked;
 }
 
 function setOperands(multipleOperands = false) {
@@ -153,6 +184,7 @@ function resetValues(onlyNumbersClicked = false) {
     console.log("Only clearing number clicked and prev values");
     numberClicked = '';
     prevValues = [''];
+    positiveOrNegative = "+";
   } else {
     console.log("Clearing everythin");
     operationDisplayPane.textContent = '';
@@ -165,6 +197,7 @@ function resetValues(onlyNumbersClicked = false) {
     operator = '';
     result = 0;
     console.clear();
+    positiveOrNegative = "+";
   }
 }
 
