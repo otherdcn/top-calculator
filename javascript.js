@@ -73,13 +73,17 @@ function listenForNumberClicks() {
   allNumberKeys.forEach((numberKey) => {
     numberKey.addEventListener("click", () => {
       console.log("Number key pressed: "+numberKey.textContent);
+
+      if (numberKey.textContent === "." && numberClicked.includes(".")) {
+        console.log(". was clicked again");
+        return;
+      }
+
       numberClicked += numberKey.textContent;
       console.log("Final number: "+numberClicked);
-      numberClicked = Number(numberClicked);
       if (positiveOrNegative === "-" && numberClicked > 0) numberClicked = -numberClicked;
       if (positiveOrNegative === "+" && numberClicked < 0) numberClicked = -(numberClicked);
       prevValues.push(numberClicked);
-      // console.log("Previous Values: "+prevValues);
       resultsDisplayPane.textContent = numberClicked;
     });
   });
