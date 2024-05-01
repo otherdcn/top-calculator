@@ -10,7 +10,7 @@ const allNumberKeys = keypad.querySelectorAll(".number-key");
 let operandOne = null;
 let operandTwo = null;
 let numberClicked = '';
-let pervValues = [''];
+let prevValues = [''];
 let operator = null;
 let multipleOperands = true;
 let result;
@@ -64,8 +64,8 @@ function listenForNumberClicks() {
     numberKey.addEventListener("click", () => {
       console.log("Number key pressed: "+numberKey.textContent);
       numberClicked += numberKey.textContent;
-      pervValues.push(numberClicked);
-      console.log("Previous Values: "+pervValues);
+      prevValues.push(numberClicked);
+      console.log("Previous Values: "+prevValues);
       resultsDisplayPane.textContent = numberClicked;
     });
   });
@@ -83,9 +83,8 @@ function listenForOperationClick() {
 
       operator = operationKey.textContent;
       operationDisplayPane.textContent = operator;
-      numberClicked = '';
-      pervValues = [''];
-      multipleOperands = true;
+      resetValues(true);
+      let multipleOperands = true;
     });
   });
 }
@@ -96,32 +95,26 @@ function listenForActionClicks() {
       if (actionKey.textContent === "AC") {
         console.log("Action key pressed: "+actionKey.textContent);
         console.log("All Cleared Clicked")
-        operationDisplayPane.textContent = '';
-        resultsDisplayPane.textContent = '';
-        operandOne = null;
-        operandTwo = null;
-        numberClicked = '';
-        operator = '';
-        result = 0;
-        console.clear();
+        resetValues();
       } else if (actionKey.textContent === "=") {
         console.log("Action key pressed: "+actionKey.textContent);
-
-        multipleOperands = false;
-        setOperands(multipleOperands);
+        setOperands(false);
 
         operationDisplayPane.textContent = actionKey.textContent;
 
         result = operate(operator,operandOne,operandTwo);
         console.log(`${operandOne} ${operator} ${operandTwo} = ${result}`);
-        numberClicked = '';
+        // numberClicked = '';
+        // prevValues = [''];
+        resetValues(true);
       } else if (actionKey.textContent === "x") {
         console.log("Backspace clicked");
-        console.log("Prev values Size: "+pervValues.length);
-        console.log("Prev values Popped: "+pervValues.pop());
-        console.log("Prev values Set: "+pervValues[pervValues.length-1]);
-        resultsDisplayPane.textContent = pervValues[pervValues.length-1];
-        numberClicked = pervValues[pervValues.length-1];
+        console.log("Prev values Size: "+prevValues.length);
+        console.log("Prev values Popped: "+prevValues.pop());
+        console.log("Prev values Set: "+prevValues[prevValues.length-1]);
+        if (prevValues[0] === undefined) prevValues[0] = '';
+        resultsDisplayPane.textContent = prevValues[prevValues.length-1];
+        numberClicked = prevValues[prevValues.length-1];
       }
     });
   });
@@ -146,6 +139,26 @@ function setOperands(multipleOperands = false) {
 
   resultsDisplayPane.textContent = '';
   return fulfilOperation;
+}
+
+function resetValues(onlyNumbersClicked = false) {
+  if (onlyNumbersClicked) {
+    console.log("Only clearing number clicked and prev values");
+    numberClicked = '';
+    prevValues = [''];
+  } else {
+    console.log("Clearing everythin");
+    operationDisplayPane.textContent = '';
+    resultsDisplayPane.textContent = '';
+    operandOne = null;
+    operandTwo = null;
+    numberClicked = '';
+    prevValues = [''];
+    numberClicked = '';
+    operator = '';
+    result = 0;
+    console.clear();
+  }
 }
 
 listenForNumberClicks();
