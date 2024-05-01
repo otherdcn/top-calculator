@@ -32,6 +32,10 @@ function divide(a,b) {
   return a / b;
 }
 
+function percentageOf(a,b) {
+  return (a/100) * b;
+}
+
 function operate(operator,numOne,numTwo) {
   let result;
   numOne = Number(numOne);
@@ -49,6 +53,9 @@ function operate(operator,numOne,numTwo) {
       break;
     case  '/':
       result = divide(numOne,numTwo);
+      break;
+    case '%':
+      result = percentageOf(numOne,numTwo);
       break;
   }
 
@@ -84,7 +91,7 @@ function listenForOperationClick() {
       operator = operationKey.textContent;
       operationDisplayPane.textContent = operator;
       resetValues(true);
-      let multipleOperands = true;
+      multipleOperands = true;
     });
   });
 }
