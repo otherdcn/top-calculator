@@ -42,7 +42,7 @@ function multiply(a,b) {
 }
 
 function divide(a,b) {
-  if (b === 0) return 'can\'t';
+  if (b === 0) return 'error';
   return a / b;
 }
 
@@ -61,13 +61,13 @@ function operate(operator,numOne,numTwo) {
     case '+':
       result = add(numOne,numTwo);
       break;
-    case  '-':
+    case  '−':
       result = subtract(numOne,numTwo);
       break;
-    case  '*':
+    case  '×':
       result = multiply(numOne,numTwo);
       break;
-    case  '/':
+    case  '÷':
       result = divide(numOne,numTwo);
       break;
     case '%':
@@ -76,7 +76,7 @@ function operate(operator,numOne,numTwo) {
   }
 
   // Return final result depending on whether it's a divide by zero response or floating point
-  result = (result === 'can\'t') ? 'Can\'t divide by zero' : Number(result.toFixed(5));
+  result = (result === 'error') ? "Can't divide by zero" : Number(result.toFixed(5));
   
   resultsDisplayPane.textContent = result;
 
@@ -154,7 +154,7 @@ function listenForActionClicks() {
 
         // Only reset numberClicked, prevValues, positiveOrNegative
         resetValues(true);
-      } else if (actionKey.textContent === "x") {
+      } else if (actionKey.textContent === "DEL") {
         prevValues.pop(); // Removes last number, which is the current number in display
 
         if (prevValues[0] === undefined) prevValues[0] = ''; // Just incased we popped the last element
@@ -227,7 +227,6 @@ function resetValues(onlyNumbersClicked = false) {
     numberClicked = '';
     operator = '';
     result = 0;
-    console.clear();
     positiveOrNegative = "+";
   }
 }

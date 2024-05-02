@@ -9,6 +9,7 @@ body {
   background-color: #1F2937;
   color: #fff;
   font-size: 35px;
+  font-family:'Courier New', Courier, monospace;
 }
 
 body {
@@ -22,18 +23,19 @@ body {
 
 .main {
   background-color: #183446;
-  width: 45%;
-  height: 70%;
+  width: 30%;
+  height: 80%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   gap: 5px;
-  border-radius: 20px;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .display {
-  width: 90%;
+  width: 100%;
   height: 25%;
   display: flex;
   flex-flow: column nowrap;
@@ -42,15 +44,14 @@ body {
 }
 
 .contents {
-  background-color: #38AECC;
-  width: 80%;
+  width: 100%;
   height: 85%;
   border-radius: 5px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
 }
 
 .results-pane {
@@ -60,7 +61,8 @@ body {
   flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: flex-end;
-  padding: 10px;
+  padding: 10px 0;
+  font-size: 40px;
 }
 
 .operation-pane {
@@ -70,46 +72,48 @@ body {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
 }
 
 .keypad {
-  width: 90%;
+  width: 100%;
   height: 70%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  gap: 1px;
+  gap: 10px;
 }
 
 .key-row {
-  width: 95%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  gap: 1px;
+  gap: 10px;
 }
 
 .key {
-  background-color: #1F2937;
-  width: 20%;
+  background-color: #183446;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: -3px -3px 1px #1F2937;
+  border-radius: 20px;
+  border: #1F2937 solid 1px;
 }
 
 .action-key, .operation-key {
-  border-radius: 15px;
-  background-color: #0090C1;
+  color: #ed9600;
 }
 
-.number-key {
-  border-radius: 15px;
-  background-color: #046E8F;
+.word-key {
+  font-size: 25px;
+  color: #ff4848;
 }
 
 .key:hover {
